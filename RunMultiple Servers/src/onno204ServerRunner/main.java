@@ -46,7 +46,7 @@ public class main {
 						System.out.println("Stopping server " + i);
 						Process proc = Utils.list.get(i);
 						while(proc.isAlive()){
-							System.out.println("waitloop: " + x + "/sleep | Server " + i);
+							System.out.println("waitloop: " + x + "/5000 | Server " + i);
 							x++;
 							Thread.sleep(2);
 							if(x > 5000){
