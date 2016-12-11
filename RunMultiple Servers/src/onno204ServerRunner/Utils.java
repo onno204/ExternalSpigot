@@ -5,9 +5,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.OutputStreamWriter;
-import java.io.Writer;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -50,14 +49,12 @@ public class Utils {
 			proc = pb.start();
 			//If ServerTpe = Bungeecord Set Bungeecord streams and writters
 			if(server == ServerTypes.BungeeCord){
-				BungeeCordStream = proc.getOutputStream();
-				ReCreateWritters();
 				//List for the /stop
+				BungeecordWritter = new PrintWriter(new OutputStreamWriter(proc.getOutputStream(), "UTF-8") );
 				ProcST.put(proc, ServerTypes.BungeeCord);
 				System.out.println("BungeeCord proccess Created");
 			}else if(server == ServerTypes.Lobby){
-				LobbyStream = proc.getOutputStream();
-				ReCreateWritters();
+				LobbyWritter = new PrintWriter(new OutputStreamWriter(proc.getOutputStream(), "UTF-8") );
 				ProcST.put(proc, ServerTypes.Lobby);
 				System.out.println("Lobby proccess Created");
 			}
@@ -73,31 +70,18 @@ public class Utils {
 			
 		} catch (IOException e) { System.out.println(e.toString()); }
 	}
-	//Recreate writters, Set the writters when RunProcces() is called
-	public static void ReCreateWritters(){
-		System.out.println("ReCreating!");
-		try {
-			for (Process process : ProcST.keySet()) {
-				ServerTypes server = ProcST.get(process);
-				if(server == ServerTypes.BungeeCord){
-					BungeeCordStream = process.getOutputStream();
-					BungeecordWritter = new OutputStreamWriter(BungeeCordStream, "UTF-8");
-				}else if(server == ServerTypes.Lobby){
-					LobbyStream = process.getOutputStream();
-					LobbyWritter = new OutputStreamWriter(LobbyStream, "UTF-8");
-				}
-			}
-		} catch (Exception e) { System.out.println(e.toString()); }
-	}
 	
 	//Write to the console of spigot/bungee
 	public static void Write(String s, ServerTypes type){
-		//I didn't know it any more and delete the old code :|
-		if(type == ServerTypes.BungeeCord){
-			
-		}else if(type == ServerTypes.Lobby){
-			
-		}
+		try {
+			if(type == ServerTypes.BungeeCord){
+				BungeecordWritter.write(s);
+			}else if(type == ServerTypes.Lobby){
+				LobbyWritter.write(s);
+				LobbyWritter.write("\n");
+				LobbyWritter.flush();
+			}
+		} catch (Exception e) { System.out.println(e.toString()); }
 	}
 	
 	
@@ -106,10 +90,8 @@ public class Utils {
 	public static HashMap<Process, ServerTypes> ProcST = new HashMap<Process, ServerTypes>();
 	//public static HashMap<String, OutputStream> InputStreams = new HashMap<String, OutputStream>();
 	
-	public static OutputStream LobbyStream;
-	public static OutputStream BungeeCordStream;
-	public static Writer LobbyWritter;
-	public static Writer BungeecordWritter;
+	public static PrintWriter LobbyWritter;
+	public static PrintWriter BungeecordWritter;
 	
 	
 }

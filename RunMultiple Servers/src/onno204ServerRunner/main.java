@@ -38,8 +38,8 @@ public class main {
 				
 				//Check's if it's a need to stop
 				if(cmd.toLowerCase().startsWith("stop")){
-					Utils.Write("stop", ServerTypes.BungeeCord);
-					Utils.Write("stop", ServerTypes.Lobby);
+					//Utils.Write("stop", ServerTypes.BungeeCord);
+					//Utils.Write("stop", ServerTypes.Lobby);
 					//Couting so the server has gotten a time to close
 					int x = 1;
 					for(int i=0; i < Utils.list.size(); i++){
@@ -49,7 +49,7 @@ public class main {
 							System.out.println("waitloop: " + x + "/10000 | Server " + i);
 							x++;
 							Thread.sleep(2);
-							if(x > 10000){
+							if(x > 1){
 								//Destroy the porcess after 20000 mil. seconds
 								proc.destroyForcibly();
 							}
