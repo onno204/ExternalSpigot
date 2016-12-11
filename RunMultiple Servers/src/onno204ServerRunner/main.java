@@ -38,22 +38,23 @@ public class main {
 				
 				//Check's if it's a need to stop
 				if(cmd.toLowerCase().startsWith("stop")){
-					//Utils.Write("stop", ServerTypes.BungeeCord);
-					//Utils.Write("stop", ServerTypes.Lobby);
+					Utils.Write("end", ServerTypes.BungeeCord);
+					Utils.Write("stop", ServerTypes.Lobby);
 					//Couting so the server has gotten a time to close
 					int x = 1;
 					for(int i=0; i < Utils.list.size(); i++){
 						System.out.println("Stopping server " + i);
 						Process proc = Utils.list.get(i);
 						while(proc.isAlive()){
-							System.out.println("waitloop: " + x + "/10000 | Server " + i);
+							System.out.println("waitloop: " + x + "/sleep | Server " + i);
 							x++;
 							Thread.sleep(2);
-							if(x > 1){
-								//Destroy the porcess after 20000 mil. seconds
+							if(x > 5000){
+								//Destroy the porcess after 10000 mil. seconds
 								proc.destroyForcibly();
 							}
 						}
+						x=1;
 					}
 					break;
 				}
@@ -67,9 +68,15 @@ public class main {
 				}else if(cmd.startsWith("Bungeecord") ){
 					Utils.Write(cmd.replaceFirst("Bungeecord", ""), ServerTypes.BungeeCord);
 					System.out.println("Sending '" + cmd.replaceFirst("Bungeecord", "") + "' to Bungeecord.");
+				}else{
+					System.out.println("");
+					System.out.println("==================================================================");
+					System.out.println("The server wasn't found! Try: Lobby / Bungeecord");
+					System.out.println("Example:");
+					System.out.println("LobbyHelp");
+					System.out.println("Make sure servername and first piece of command is connected!");
+					System.out.println("==================================================================");
 				}
-				
-				
 			} catch (Exception e) { System.out.println(e.toString()); }
 			
 		}

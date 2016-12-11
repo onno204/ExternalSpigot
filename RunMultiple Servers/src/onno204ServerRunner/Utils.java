@@ -90,7 +90,6 @@ public class Utils {
 	
 	public static ArrayList<Process> list = new ArrayList<Process>();
 	public static HashMap<Process, ServerTypes> ProcST = new HashMap<Process, ServerTypes>();
-	//public static HashMap<String, OutputStream> InputStreams = new HashMap<String, OutputStream>();
 	
 	public static PrintWriter LobbyWritter;
 	public static PrintWriter BungeecordWritter;
