@@ -76,9 +76,11 @@ public class Utils {
 		try {
 			if(type == ServerTypes.BungeeCord){
 				BungeecordWritter.write(s);
+				BungeecordWritter.write(" \n");
+				BungeecordWritter.flush();
 			}else if(type == ServerTypes.Lobby){
 				LobbyWritter.write(s);
-				LobbyWritter.write("\n");
+				LobbyWritter.write(" \n");
 				LobbyWritter.flush();
 			}
 		} catch (Exception e) { System.out.println(e.toString()); }
