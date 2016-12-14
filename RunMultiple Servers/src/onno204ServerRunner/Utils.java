@@ -29,7 +29,7 @@ public class Utils {
 		String line = null;
 		try {
 			while((line = in.readLine()) != null) {
-				System.out.println(Programname + "[Error]> " + line);
+				System.err.println(Programname + "[Error]> " + line);
 			}
 		} catch (IOException e) { }
 	}
@@ -57,6 +57,14 @@ public class Utils {
 				LobbyWritter = new PrintWriter(new OutputStreamWriter(proc.getOutputStream(), "UTF-8") );
 				ProcST.put(proc, ServerTypes.Lobby);
 				System.out.println("Lobby proccess Created");
+			}else if(server == ServerTypes.Minetopia){
+				MinetopiaWritter = new PrintWriter(new OutputStreamWriter(proc.getOutputStream(), "UTF-8") );
+				ProcST.put(proc, ServerTypes.Minetopia);
+				System.out.println("Minetopia proccess Created");
+			}else if(server == ServerTypes.KitPvp){
+				KitPvpWritter = new PrintWriter(new OutputStreamWriter(proc.getOutputStream(), "UTF-8") );
+				ProcST.put(proc, ServerTypes.KitPvp);
+				System.out.println("KitPvp proccess Created");
 			}
 			System.out.println("Creating listeners");
 			//Logging to console
@@ -64,7 +72,7 @@ public class Utils {
 			//Separete thread so we can also listen to the error's
 			Thread t = new Thread(new Runnable() { public void run() { Listnen(ListenS, Programname ); } });
 			t.start();
-			System.out.println(pb.directory());
+			System.out.println("Started " + Programname + ".");
 			list.add(proc);
 			error(proc.getErrorStream(), Programname);
 			
@@ -82,6 +90,14 @@ public class Utils {
 				LobbyWritter.write(s);
 				LobbyWritter.write(" \n");
 				LobbyWritter.flush();
+			}else if(type == ServerTypes.Minetopia){
+				MinetopiaWritter.write(s);
+				MinetopiaWritter.write(" \n");
+				MinetopiaWritter.flush();
+			}else if(type == ServerTypes.KitPvp){
+				KitPvpWritter.write(s);
+				KitPvpWritter.write(" \n");
+				KitPvpWritter.flush();
 			}
 		} catch (Exception e) { System.out.println(e.toString()); }
 	}
@@ -93,6 +109,8 @@ public class Utils {
 	
 	public static PrintWriter LobbyWritter;
 	public static PrintWriter BungeecordWritter;
+	public static PrintWriter MinetopiaWritter;
+	public static PrintWriter KitPvpWritter;
 	
 	
 }

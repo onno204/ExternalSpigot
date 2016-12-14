@@ -1,5 +1,5 @@
 package onno204ServerRunner;
 
 public enum ServerTypes {
-	Lobby, BungeeCord;
+	Lobby, BungeeCord, Minetopia, KitPvp;
 }
