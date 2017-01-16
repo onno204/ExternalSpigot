@@ -20,8 +20,14 @@ public class Utils {
 			//Output to console
 			while((line = in.readLine()) != null) {
 			  System.out.println(Programname + "> " + line);
+			  for(PrintWriter out : main.Buffers){
+				  try{
+					  out.println(Programname + "> " + line);
+					  out.flush();
+				  }catch(Exception e){ System.out.print(e.getMessage()); }
+			  }
 			}
-		} catch (IOException e) { }
+		} catch (IOException e) { System.out.print(e.getMessage()); }
 	}
 	//Error reader, Same as above
 	public static void error(InputStream s, String Programname){
@@ -29,9 +35,15 @@ public class Utils {
 		String line = null;
 		try {
 			while((line = in.readLine()) != null) {
-				System.err.println(Programname + "[Error]> " + line);
+				System.out.println(Programname + "[Error]> " + line);
+				  for(PrintWriter out : main.Buffers){
+					  try{
+						  out.println(Programname + "[Error]> " + line);
+						  out.flush();
+					  }catch(Exception e){ System.out.print(e.getMessage()); }
+				  }
 			}
-		} catch (IOException e) { }
+		} catch (IOException e) { System.out.print(e.getMessage()); }
 	}
 	
 	//Run (Called from SErver1T and Server2T)
@@ -65,6 +77,14 @@ public class Utils {
 				KitPvpWritter = new PrintWriter(new OutputStreamWriter(proc.getOutputStream(), "UTF-8") );
 				ProcST.put(proc, ServerTypes.KitPvp);
 				System.out.println("KitPvp proccess Created");
+			}else if(server == ServerTypes.Factions){
+				FactionsWritter = new PrintWriter(new OutputStreamWriter(proc.getOutputStream(), "UTF-8") );
+				ProcST.put(proc, ServerTypes.Factions);
+				System.out.println("Factions proccess Created");
+			}else if(server == ServerTypes.Test){
+				TestWritter = new PrintWriter(new OutputStreamWriter(proc.getOutputStream(), "UTF-8") );
+				ProcST.put(proc, ServerTypes.Test);
+				System.out.println("Test proccess Created");
 			}
 			System.out.println("Creating listeners");
 			//Logging to console
@@ -98,6 +118,14 @@ public class Utils {
 				KitPvpWritter.write(s);
 				KitPvpWritter.write(" \n");
 				KitPvpWritter.flush();
+			}else if(type == ServerTypes.Factions){
+				FactionsWritter.write(s);
+				FactionsWritter.write(" \n");
+				FactionsWritter.flush();
+			}else if(type == ServerTypes.Test){
+				TestWritter.write(s);
+				TestWritter.write(" \n");
+				TestWritter.flush();
 			}
 		} catch (Exception e) { System.out.println(e.toString()); }
 	}
@@ -111,6 +139,8 @@ public class Utils {
 	public static PrintWriter BungeecordWritter;
 	public static PrintWriter MinetopiaWritter;
 	public static PrintWriter KitPvpWritter;
+	public static PrintWriter FactionsWritter;
+	public static PrintWriter TestWritter;
 	
 	
 }
